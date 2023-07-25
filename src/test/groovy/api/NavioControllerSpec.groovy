@@ -5,7 +5,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class FrotaControllerSpec extends Specification implements ControllerUnitTest<FrotaController>, DomainUnitTest<Frota> {
+class NavioControllerSpec extends Specification implements ControllerUnitTest<NavioController>, DomainUnitTest<Navio> {
 
     def populateValidParams(params) {
         assert params != null
@@ -17,7 +17,7 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
 
     void "Test the index action returns the correct model"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
+        controller.navioService = Mock(NavioService) {
             1 * list(_) >> []
             1 * count() >> 0
         }
@@ -26,8 +26,8 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
         controller.index()
 
         then:"The model is correct"
-        !model.frotaList
-        model.frotaCount == 0
+        !model.navioList
+        model.navioCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -35,7 +35,7 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
         controller.create()
 
         then:"The model is correctly created"
-        model.frota!= null
+        model.navio!= null
     }
 
     void "Test the save action with a null instance"() {
@@ -45,14 +45,14 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
         controller.save(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/frota/index'
+        response.redirectedUrl == '/navio/index'
         flash.message != null
     }
 
     void "Test the save action correctly persists"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
-            1 * save(_ as Frota)
+        controller.navioService = Mock(NavioService) {
+            1 * save(_ as Navio)
         }
 
         when:"The save action is executed with a valid instance"
@@ -60,38 +60,38 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
         populateValidParams(params)
-        def frota = new Frota(params)
-        frota.id = 1
+        def navio = new Navio(params)
+        navio.id = 1
 
-        controller.save(frota)
+        controller.save(navio)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/frota/show/1'
+        response.redirectedUrl == '/navio/show/1'
         controller.flash.message != null
     }
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
-            1 * save(_ as Frota) >> { Frota frota ->
-                throw new ValidationException("Invalid instance", frota.errors)
+        controller.navioService = Mock(NavioService) {
+            1 * save(_ as Navio) >> { Navio navio ->
+                throw new ValidationException("Invalid instance", navio.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
-        def frota = new Frota()
-        controller.save(frota)
+        def navio = new Navio()
+        controller.save(navio)
 
         then:"The create view is rendered again with the correct model"
-        model.frota != null
+        model.navio != null
         view == 'create'
     }
 
     void "Test the show action with a null id"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
+        controller.navioService = Mock(NavioService) {
             1 * get(null) >> null
         }
 
@@ -104,20 +104,20 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
 
     void "Test the show action with a valid id"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
-            1 * get(2) >> new Frota()
+        controller.navioService = Mock(NavioService) {
+            1 * get(2) >> new Navio()
         }
 
         when:"A domain instance is passed to the show action"
         controller.show(2)
 
         then:"A model is populated containing the domain instance"
-        model.frota instanceof Frota
+        model.navio instanceof Navio
     }
 
     void "Test the edit action with a null id"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
+        controller.navioService = Mock(NavioService) {
             1 * get(null) >> null
         }
 
@@ -130,15 +130,15 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
 
     void "Test the edit action with a valid id"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
-            1 * get(2) >> new Frota()
+        controller.navioService = Mock(NavioService) {
+            1 * get(2) >> new Navio()
         }
 
         when:"A domain instance is passed to the show action"
         controller.edit(2)
 
         then:"A model is populated containing the domain instance"
-        model.frota instanceof Frota
+        model.navio instanceof Navio
     }
 
 
@@ -149,14 +149,14 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
         controller.update(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/frota/index'
+        response.redirectedUrl == '/navio/index'
         flash.message != null
     }
 
     void "Test the update action correctly persists"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
-            1 * save(_ as Frota)
+        controller.navioService = Mock(NavioService) {
+            1 * save(_ as Navio)
         }
 
         when:"The save action is executed with a valid instance"
@@ -164,31 +164,31 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
         populateValidParams(params)
-        def frota = new Frota(params)
-        frota.id = 1
+        def navio = new Navio(params)
+        navio.id = 1
 
-        controller.update(frota)
+        controller.update(navio)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/frota/show/1'
+        response.redirectedUrl == '/navio/show/1'
         controller.flash.message != null
     }
 
     void "Test the update action with an invalid instance"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
-            1 * save(_ as Frota) >> { Frota frota ->
-                throw new ValidationException("Invalid instance", frota.errors)
+        controller.navioService = Mock(NavioService) {
+            1 * save(_ as Navio) >> { Navio navio ->
+                throw new ValidationException("Invalid instance", navio.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        controller.update(new Frota())
+        controller.update(new Navio())
 
         then:"The edit view is rendered again with the correct model"
-        model.frota != null
+        model.navio != null
         view == 'edit'
     }
 
@@ -199,13 +199,13 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
         controller.delete(null)
 
         then:"A 404 is returned"
-        response.redirectedUrl == '/frota/index'
+        response.redirectedUrl == '/navio/index'
         flash.message != null
     }
 
     void "Test the delete action with an instance"() {
         given:
-        controller.frotaService = Mock(FrotaService) {
+        controller.navioService = Mock(NavioService) {
             1 * delete(2)
         }
 
@@ -215,7 +215,7 @@ class FrotaControllerSpec extends Specification implements ControllerUnitTest<Fr
         controller.delete(2)
 
         then:"The user is redirected to index"
-        response.redirectedUrl == '/frota/index'
+        response.redirectedUrl == '/navio/index'
         flash.message != null
     }
 }

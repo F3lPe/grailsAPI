@@ -3,7 +3,7 @@ package api
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class FrotaSpec extends Specification implements DomainUnitTest<Frota> {
+class NavioSpec extends Specification implements DomainUnitTest<Navio> {
 
     def setup() {
     }
