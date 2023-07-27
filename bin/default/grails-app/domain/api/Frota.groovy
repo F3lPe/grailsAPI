@@ -1,7 +1,7 @@
 package api
 import grails.rest.Resource
 
-@Resource(uri='/frota', formats=['json', 'xml'])
+@Resource(uri='/frota', formats=['json'])
 class Frota {
     String nome 
      
